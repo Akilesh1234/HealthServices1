@@ -1,0 +1,617 @@
+<!DOCTYPE html>
+<html>
+ 
+<head>
+  <title>Health Care</title>
+  <meta http-equiv='Content-Type' content='text/html; charset=utf-8' />
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="stylesheet" href="http://example.gajotres.net/themes/graphite-master/generated/slate/jquery.mobile-1.3.1.css" />
+  <script src="cordova.js"></script>
+  <script src="js/jquery-1.11.1.js"></script>
+  <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
+  <script src="js/jquery.mobile-1.3.2.min.js"></script>
+  <link rel="stylesheet" href="css/leaflet.css"/>
+  <script src="js/leaflet.js"></script>
+  <script type="text/javascript">
+  if(navigator.geolocation == undefined){
+    alert("GeoLocation undefined");
+  }else{
+    alert("GeoLocation Available");
+    navigator.geolocation.getCurrentPosition(userLocated, locationError);
+
+    function userLocated(position){
+      var latitude = position.coords.latitude;
+      var longitude = position.coords.longitude;
+      var mymap = L.map('mapid').setView([latitude, longitude],11);
+      var ent = L.marker([-20.29383,57.49642]).addTo(mymap);
+      var medisave = L.marker([-20.2687,57.4767]).addTo(mymap);
+      var victoria = L.marker([-20.2783,57.4767]).addTo(mymap);
+      var darne = L.marker([-20.31351,57.51719]).addTo(mymap);
+      var moka = L.marker([-20.22220,57.50374]).addTo(mymap);
+      var agarwal = L.marker([-20.24916,57.49195]).addTo(mymap);
+      var mauricienne = L.marker([-20.23233,57.49577]).addTo(mymap);
+      var wellkin = L.marker([-20.23331,57.50358]).addTo(mymap);
+      var jeetoo = L.marker([-20.16903,57.50210]).addTo(mymap);
+      var cnord = L.marker([-20.1308,57.4971]).addTo(mymap);
+      var ssr = L.marker([-20.09685,57.55938]).addTo(mymap);
+      var dor = L.marker([-20.0594,57.6855]).addTo(mymap);
+      var nehru = L.marker([-20.4052,57.5930]).addTo(mymap);
+      var mahebourg = L.marker([-20.4116,57.7033]).addTo(mymap);
+        var marker = L.marker([latitude, longitude]).addTo(mymap);
+        var circle = L.circle([latitude, longitude], {
+                       color: 'red',
+                       fillColor: '#f03',
+                       fillOpacity: 0.5,
+                       radius: 100
+                       }).addTo(mymap);
+        circle.bindPopup("You may find the treasure around here");
+
+        marker.bindPopup("Hello Popup Marker").openPopup();
+        ent.bindPopup("ENT Hospital").openPopup();
+        medisave.bindPopup("Medisave Clinic").openPopup();
+        darne.bindPopup("Darne Clinic").openPopup();
+        moka.bindPopup("Moka Eye Hospital").openPopup();
+        agarwal.bindPopup("Dr.Agalwal's Eye Hospital").openPopup();
+        mauricienne.bindPopup("Mauricienne Clinic").openPopup();
+        wellkin.bindPopup("Wellkin").openPopup();
+        jeetoo.bindPopup("Dr. Jeetoo Hospital").openPopup();
+        cnord.bindPopup("Clinique du Nord").openPopup();
+        ssr.bindPopup("Dr. Seewoosagur Ramgoolam National Hospital").openPopup();
+        dor.bindPopup("Poudre d'or Hospital").openPopup();
+        nehru.bindPopup("Jawaharlal Nehru Hospital").openPopup();
+        mahebourg.bindPopup("Mahebourg Hospital").openPopup();
+        victoria.bindPopup("Victoria Hospital").openPopup();
+
+        L.tileLayer('https://api.tiles.mapbox.com/v4/{id}/{z}/{x}/{y}.png?access_token={accessToken}', {
+          maxZoom: 19,
+
+            attribution: 'Map data &copy;'+
+            '<a href="https://www.openstreetmap.org/">OpenStreetMap</a>'+
+            'contributors,<a href="https://creativecommons.org/licenses'+
+             '/by-sa/2.0/">CC-BY-SA</a>,Imagery © <a href="https://'+
+             'www.mapbox.com/">Mapbox</a>',
+             id: 'mapbox.streets',
+             accessToken:'pk.eyJ1IjoibWFwYm94IiwiYSI6ImNpejY4NXVycTA2emYyc'+
+             'XBndHRqcmZ3N3gifQ.rJcFIG214AriISLbB6B5aw'
+             
+         }).addTo(mymap); 
+    }
+
+    function locationError(error){
+      switch(error.code){
+                   case error.PERMISSION_DENIED:
+                     alert("Permission Denied-" + error.message);
+                     break;
+                   case error.POSITION_UNAVAILABLE:
+                     alert("Position not available-" + error.message);
+                     break;
+                   case error.TIMEOUT:
+                     alert("Request Time out-" + error.message);
+                     break;
+                }//end of function  
+  }//end the else block
+}
+</script>
+
+  <script type="text/javascript">
+    $(document).ready(function(){
+      $('#btn_bmi').click(function(){
+              var n1 = ($('#num-1').val());
+              var n2 = ($('#num-2').val());
+              var n3 = n2*n2;
+
+              $('#result').html(Math.round((n1) / (n3)),2);
+          });
+        $('#btn_mg').click(function(){
+              var mg1 = ($('#num-mg').val());
+              var mg2 = (mg1/18).toFixed(2);
+              $('#mgresult').html(mg2);
+          });
+          $('#btn_mmol').click(function(){
+              var mmol1 = ($('#num-mmol').val());
+              var mmol2 = (mmol1*18).toFixed(0);
+              $('#mmolresult').html(mmol2);
+          }); 
+          $('#btn_glu').click(function(){
+              var diet = $('input:radio[name=diet]:checked').val();
+              var num = ($('#glu1').val());
+
+              if (diet == "fasting")
+              {
+                if (num >= 80 && num <= 100){
+                  $('#gluresult').html("Normal");
+                }else if (num >= 101 && num <= 125){
+                  $('#gluresult').html("Impaired Glucose");
+                }else if (num >= 126){
+                  $('#gluresult').html("Diabetic");
+                }else{
+                  alert("Invalid entered value");
+                }
+              }else if (diet == "after"){
+                if (num >= 170 && num <= 200){
+                  $('#gluresult').html("Normal");
+                }else if (num >= 190 && num <= 230){
+                  $('#gluresult').html("Impaired Glucose");
+                }else if (num >= 220 && num <= 300){
+                  $('#gluresult').html("Diabetic");
+                }else{
+                  alert("Invalid entered value");
+                }
+              }else{
+                if (num >= 120 && num <= 140){
+                  $('#gluresult').html("Normal");
+                }else if (num >= 140 && num <= 160){
+                  $('#gluresult').html("Impaired Glucose");
+                }else if (num >= 200){
+                  $('#gluresult').html("Diabetic");
+                }else{
+                  alert("Invalid entered value");
+                }
+              }
+            
+          });
+      });
+      document.addEventListener("deviceready", onDeviceReady, false);
+      var db;
+        function onDeviceReady(){
+           db = window.openDatabase("myHealthDB", "1.0", "Simple Demo", 2*1024*1024);
+           db.transaction(createDB, errorCB, successCB);
+        }
+
+        function createDB(tx){
+          //tx.executeSql('DROP TABLE IF EXISTS book');
+          tx.executeSql('CREATE TABLE IF NOT EXISTS glucose(id INT, num INT)');
+        }
+
+        function errorCB(err){
+            alert("SQL Error: "+err.code);
+        }
+
+        function successCB(){
+          alert("Database & Table Created");
+        }
+
+        function successQueryDB(tx){
+          alert("Insert Successful");
+          tx.executeSql('SELECT * FROM glucose', [], renderListCB, errorCB);
+        }
+
+        function insertDB(tx){
+          var num = $("[name='glu1']").val();
+            var sql = 'INSERT INTO glucose (num) VALUES (?)';
+            tx.executeSql(sql,[num], successQueryDB, errorCB);
+        }
+
+        function renderListCB(tx, results){
+            var htmlString = ' ';
+            var len = results.rows.length;
+
+            for(var i = 0; i<len;i++){
+                htmlString+='<li>'+results.rows.item(i).id+'<br>'+results.rows.item(i).num+'</li>';
+            }
+            $('#resultList').html(htmlString);
+            $('#resultList').listview('refresh');
+        }
+
+         function submitForm(){
+            onDeviceReady();
+            db.transaction(insertDB, errorCB);
+            $.mobile.changePage("#pageten", {reverse:false, transition:"slide"});
+            return false;
+        }
+
+      //start of chart
+      google.charts.load('current', {'packages':['corechart']});
+      google.charts.setOnLoadCallback(drawChart);
+
+      function drawChart() {
+        var data = google.visualization.arrayToDataTable([
+          ['Year', 'BMI'],
+          ['2004',  18],
+          ['2005',  20],
+          ['2006',  25],
+          ['2007',  18]
+        ]);
+
+        var options = {
+          title: 'BMI analysis',
+          curveType: 'function',
+          legend: { position: 'bottom' }
+        };
+
+        var chart = new google.visualization.LineChart(document.getElementById('curve_chart'));
+
+        chart.draw(data, options);
+      }//end of chart
+  </script>
+</head>
+ 
+<body>
+  <div data-role="page" id="pageone">
+ 
+    <div data-role="header" data-position="fixed">
+      
+      <a href="#popupLogin" id="signin"  data-rel="popup" data-position-to="window" class="ui-btn ui-corner-all ui-shadow ui-btn-inline ui-icon-check ui-btn-icon-left ui-btn-a" data-transition="pop">Sign in</a>
+<div data-role="popup" id="popupLogin" data-theme="a" class="ui-corner-all">
+    <form>
+        
+            <h3>Please sign in</h3>
+            <label for="un" class="ui-hidden-accessible">Username:</label>
+            <input type="text" name="user" id="un" value="" placeholder="username" data-theme="a">
+            <label for="pw" class="ui-hidden-accessible">Password:</label>
+            <input type="password" name="pass" id="pw" value="" placeholder="password" data-theme="a">
+            <button type="submit" class="ui-btn ui-corner-all ui-shadow ui-btn-b ui-btn-icon-left ui-icon-check">Sign in</button>
+        
+    </form>
+</div>
+      
+      <h1>Health Care</h1>
+
+    </div>
+    <!-- /header -->
+
+<div data-role="fieldcontain">
+    
+    <input type="search" name="search-2" id="search-2" value="" />
+</div>
+
+
+
+ <!--Main Content-->
+  <div data-role="main" class="ui-content">
+    <a href="#pagethree" data-transition="slideup"><img src="images/bmi.jpg" alt="BMI" height="100" width="100" style="float:left;margin:20px;"></a>
+    <a href="#pagefour" data-transition="slidefade"><img src="images/conversion.png" alt="convert" height="100" width="100" style="float:right;margin:20px;"></a>
+    <a href="#pageeight" data-transition="slidefade"><img src="images/gchecker.svg" alt="glucose" height="100" width="100" style="float:left;margin:20px;"></a>
+    <img src="images/bpcal1.jpg" alt="bp" height="100" width="100" style="float:right;margin:20px;">
+    <img src="images/faqs.jpg" alt="faqs" height="100" width="100" style="float:left;margin:20px;">
+
+  </div>
+
+    <!--footer pageone-->
+    <div data-role="footer" data-position="fixed">
+      <div data-role="navbar">
+        <ul>
+          <li><a href="#" data-icon="back">Back</a>
+          </li>
+          <li><a href="#pageone" data-icon="home">Home</a>
+          </li>
+          <li><a href="#pagefive" data-icon="info">More</a>
+          </li>
+        </ul>
+      </div>
+    </div>
+ 
+  </div>
+  <!-- /pageone -->
+
+
+<div data-role="page" id="pagetwo">
+  <!--/header 1-->  
+  <div data-role="header" style="background-color: lightblue;">
+    <h1>Health Care</h1>
+  </div>
+
+  <div data-role="main" class="ui-content">
+    <div id="mapid" style="width:500px;height:500px;"></div>
+  </div>
+
+    <!--footer pagetwo-->
+    <div data-role="footer" data-position="fixed">
+      <div data-role="navbar">
+        <ul>
+          <li><a href="#pagefive" data-icon="back">Back</a>
+          </li>
+          <li><a href="#pageone" data-icon="home">Home</a>
+          </li>
+          <li><a href="#pagetwo" data-icon="info">More</a>
+          </li>
+        </ul>
+      </div>
+    </div>
+</div>
+<!-- /pagetwo -->
+
+<div data-role="page" id="pagethree">
+  <!--/header 1-->  
+  <div data-role="header" style="background-color: lightblue;">
+    <h1>Health Care</h1>
+  </div>
+
+  <!--Content pagethree-->
+  <div data-role="main" class="ui-content">
+    <h2>BMI Calculator</h2>
+        <form>
+            <label for="num-1">Weight(in kg):</label>
+            <input type="number" data-clear-btn="true" name="num-1" id="num-1" value="" step="0.01" min="3" max="200">
+            <label for="num-2">Height(in m)</label>
+            <input type="number" data-clear-btn="true" name="num-2" id="num-2" value="" step="0.01" min="0.1" max="3">
+            <button id="btn_bmi" class="ui-btn">Calculate BMI</button>
+            <label>Your BMI is:</label><b id="result"></b>
+        </form>
+    </div>
+       
+  <!--footer pagethree-->
+  <div data-role="footer" data-position="fixed">
+      <div data-role="navbar">
+        <ul>
+          <li><a href="#pageone" data-icon="back">Back</a>
+          </li>
+          <li><a href="#pageone" data-icon="home">Home</a>
+          </li>
+          <li><a href="#pagetwo" data-icon="info">More</a>
+          </li>
+        </ul>
+      </div>
+    </div>
+
+  </div>
+<!-- /pagethree -->
+
+<div data-role="page" id="pagefour">
+  <!--/header 1-->  
+  <div data-role="header" style="background-color: lightblue;">
+    <h1>Health Care</h1>
+  </div>
+
+  <!--Content pagefour-->
+  <div data-role="main" class="ui-content">
+    <h2>Glucose Converter</h2>
+    <button class="ui-btn ui-icon-carat-r ui-btn-icon-left" onclick="window.location.href = '#pagesix';">mmol/L to mg/dl</button>
+        <form>
+            <label for="num-mg">Glucose test in mg/dl</label>
+            <input type="number" data-clear-btn="true" name="num-mg" id="num-mg" value="" min="1" max="900">
+            <label>Your glucose test(in mmol/L) is:</label><b id="mgresult"></b>
+            <button id="btn_mg" class="ui-btn">mg/dl to mmol/L</button>
+        </form>
+    </div>    
+
+  <!--footer pagefour-->
+  <div data-role="footer" data-position="fixed">
+      <div data-role="navbar">
+        <ul>
+          <li><a href="#pageone" data-icon="back">Back</a>
+          </li>
+          <li><a href="#pageone" data-icon="home">Home</a>
+          </li>
+          <li><a href="#pagefive" data-icon="info">More</a>
+          </li>
+        </ul>
+      </div>
+    </div>
+</div>
+<!-- /pagefour -->
+
+
+<div data-role="page" data-dialog="true" id="pagefive">
+    <div data-role="header" style="background-color: lightblue;">
+      <h1>More Services</h1>
+    </div>
+
+  <div role="main" class="ui-content">
+    <button class="ui-btn ui-icon-bars ui-btn-icon-left" data-transition="slidedown" onclick="window.location.href = '#pagenine';" style="background-color: lightblue;">Advices</button>
+        <button class="ui-btn ui-icon-search ui-btn-icon-left" onclick="window.location.href = '#pagetwo';" style="background-color: lightblue;">Nearest Hospitals</button>
+        <button class="ui-btn ui-icon-carat-r ui-btn-icon-left" onclick="window.location.href = '#pageseven';" style="background-color: lightblue;">Charts</button>
+        <button class="ui-btn ui-icon-gear ui-btn-icon-left" onclick="window.location.href = '#';" style="background-color: lightblue;">Help</button>
+
+  
+  <!--More Info Button-->
+    <button class="ui-btn ui-icon-back ui-btn-icon-left" onclick="window.location.href = '#pageone';" style="background-color: lightblue;">Back to home</button>
+    </div>  
+</div>
+<!-- /pagefive -->
+
+
+<div data-role="page" id="pagesix">
+  <!--/header 1-->  
+  <div data-role="header" style="background-color: lightblue;">
+    <h1>Health Care</h1>
+  </div>
+
+  <!--Main Content-->
+  <div data-role="main" class="ui-content">
+    <h2>Glucose Converter</h2>
+    <button class="ui-btn ui-icon-carat-l ui-btn-icon-left" onclick="window.location.href = '#pagefour';">mg/dl to mmol/L</button>
+        <form>
+            <label for="num-mmol">Glucose test in mg/dl</label>
+            <input type="number" data-clear-btn="true" name="num-mmol" id="num-mmol" value="" step="0.01" min="0.06" max="50">
+            <label>Your glucose test(in mg/dl) is:</label><b id="mmolresult"></b>
+            <button id="btn_mmol" class="ui-btn">mmol/L to mg/dl</button>
+        </form>
+    </div>    
+
+   <!-- footer pagesix -->
+  <div data-role="footer" data-position="fixed">
+      <div data-role="navbar">
+        <ul>
+          <li><a href="#pagefour" data-icon="back">Back</a>
+          </li>
+          <li><a href="#pageone" data-icon="home">Home</a>
+          </li>
+          <li><a href="#pagefive" data-icon="info">More</a>
+          </li>
+        </ul>
+      </div>
+    </div> 
+
+  </div>
+  <!-- /pagesix -->
+
+  <div data-role="page" id="pageseven">
+  <!--/header 1-->  
+  <div data-role="header" style="background-color: lightblue;">
+    <h1>Health Care</h1>
+  </div>
+
+  <!--Main Content-->
+  <div data-role="main" class="ui-content">
+     <div id="curve_chart" style="width: 295px; height: 250px"></div>
+  </div>    
+
+
+   <!-- footer pageseven -->
+  <div data-role="footer" data-position="fixed">
+      <div data-role="navbar">
+        <ul>
+          <li><a href="#pageone" data-icon="back">Back</a>
+          </li>
+          <li><a href="#pageone" data-icon="home">Home</a>
+          </li>
+          <li><a href="#pagefive" data-icon="info">More</a>
+          </li>
+        </ul>
+      </div>
+  </div> 
+
+  </div>
+<!-- end of pageseven -->
+
+<div data-role="page" id="pageeight">
+  <!--/header 1-->  
+  <div data-role="header" style="background-color: lightblue;">
+    <h1>Health Care</h1>
+  </div>
+
+  <!--Main Content-->
+  <div data-role="main" class="ui-content">
+     <h2>Glucose Checker</h2>
+    <form method="post" onsubmit="return submitForm()">
+    <fieldset data-role="controlgroup" data-type="vertical">
+        <input type="radio" name="diet" id="radio1" value="fasting" checked="checked">
+        <label for="radio1">Fasting</label>
+        <input type="radio" name="diet" id="radio2" value="after">
+        <label for="radio2">After Eating</label>
+        <input type="radio" name="diet" id="radio3" value="aftertwo">
+        <label for="radio3">2-3 hours after eating</label>
+
+        <label for="glu1">Enter your Glucose test(in mg/dl)</label>
+        <input type="number" data-clear-btn="false" name="glu1" id="glu1" value="" min="40" max="350">
+        <label>Your test is:</label><b id="gluresult"></b>
+        <button id="btn_glu" class="ui-btn">Check My Glucose</button>
+    </fieldset>
+</form>
+  </div>    
+
+
+   <!-- footer pageeight -->
+  <div data-role="footer" data-position="fixed">
+      <div data-role="navbar">
+        <ul>
+          <li><a href="#pageone" data-icon="back">Back</a>
+          </li>
+          <li><a href="#pageone" data-icon="home">Home</a>
+          </li>
+          <li><a href="#pagefive" data-icon="info">More</a>
+          </li>
+        </ul>
+      </div>
+  </div> 
+
+  </div>
+<!-- end of pageeight -->
+
+<div data-role="page" id="pagenine">
+  <!--/header 1-->  
+  <div data-role="header" style="background-color: lightblue;">
+    <h1>Health Care</h1>
+  </div>
+
+  <!--Main Content-->
+  <div data-role="main" class="ui-content">
+     <h2>Medical Advices</h2>
+     <h3>Tips to reduce weight</h3>
+     <p>There are many ways to lose a lot of weight fast</p>
+     <p>However, most of them will mae you hungry and unsatisfied</p>
+     <p>Below are some tips that will make you lose weight quickly, without hunger.</p>
+     <ul>
+      <li>Cut Back on Sugars and Starches</li>
+      <li>Eat Protein, Fat and Vegetables</li>
+      <div data-role="collapsible">
+        <h1>Check protein sources</h1>
+        <li><strong>Meat:</strong>Beef, Chicken, pork, lamb, etc.</li>
+        <li><strong>Fish and Seafood:</strong>Salmon, trout, shrimp, etc.</li>
+        <li><strong>Eggs:</strong>Whole eggs with the yolk are best.</li>
+      </div>
+      <li>Lift Weights 3 Times Per Week</li>
+     </ul>
+     <h3>Natural ways to lower your blood pressure</h3>
+     <p>High blood pressure is a dangerous condition that can damage your heart. It affects one in three people in the US and 1 billion people worldwide.</p>
+     <p>Here are some ways to combat high blood pressure.</p>
+     <ul>
+      <li>Walk and excercise regularly</li>
+      <li>Reduce your sodium intake</li>
+      <li>Drink less alcohol</li>
+      <li>Eat more potassium-rich foods</li>
+      <li>Cut back on caffeine</li>
+      <div data-role="collapsible">
+        <h1>Some more ways</h1>
+        <li>Learn to manage stress</li>
+        <li>Eat dark chocolate or cocoa</li>
+        <li>Lose weight</li>
+        <li>Quit smoking</li>
+        <li>Cut added sugar and refined carbs</li>
+        <li>Eat berries</li>
+        <li>Try meditation or deep breathing</li>
+        <li>Eat calcium-rich foods</li>
+        <li>Take natural supplements</li>
+        <li>Eat foods rich in magnesium</li>
+      </div>
+     </ul>
+     <h2>Ways to lower blood sugar levels</h2>
+     <p>High blood sugar occurs when your body can't effectively transport sugar from blood into cells. When left unchecked, this can lead to diabetes. One study from 2012 reported that 12-14% of US adults had type 2 diabetes, while 37-38% were classified as pre-diabetic</p>
+     <p>Here are some ways to combat high sugar levels.</p>
+     <ul>
+       <li>Exercise Regularly</li>
+       <li>Control your carb intake</li>
+       <li>Increase your fiber intake</li>
+       <li>Drink water and stay hydrated</li>
+       <li>Implement portion control</li>
+       <div data-role="collapsible">
+        <h1>Some more ways</h1>
+        <li>Choose foods with a low glycemic index</li>
+        <li>Control stress levels</li>
+        <li>Monitor your blood sugar levels</li>
+        <li>Get enough quality sleep</li>
+        <li>Eat foods rich in chromium and magnesium</li>
+        <li>Try Apple Cider Vinegar</li>
+        <li>Experiment with cinnamon extract</li>
+        <li>Try berberine</li>
+        <li>Eat fenugreek seeds</li>
+        <li>Lose some weight</li>
+      </div>
+     </ul>
+
+  </div>    
+
+
+   <!-- footer pagenine -->
+  <div data-role="footer" data-position="fixed">
+      <div data-role="navbar">
+        <ul>
+          <li><a href="#pageone" data-icon="back">Back</a>
+          </li>
+          <li><a href="#pageone" data-icon="home">Home</a>
+          </li>
+          <li><a href="#pagefive" data-icon="info">More</a>
+          </li>
+        </ul>
+      </div>
+  </div> 
+
+  </div>
+<!-- end of pagenine -->
+
+<!----/page two-------->
+    <div data-role="page" id="pageten">
+        <div data-role="header">
+            <div id="output"><ul data-role="listview" id="resultList"></div>
+        </div>
+
+        <div data-role="footer">
+            <h2>Working with SQLlite</h2>
+
+     </div>
+    </div>
+
+</body>
+ 
+</html>
